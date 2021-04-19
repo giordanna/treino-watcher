@@ -10,7 +10,7 @@
           </span>
           <h2 class="text-lg">Treino</h2>
         </button>
-        <main class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
+        <form @submit.prevent="proximoPasso(2)" class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
           <div
             ref="passo1"
             :style="{
@@ -76,12 +76,13 @@
             </div>
             <button
               @click="proximoPasso(2)"
-              class="disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+              type="submit"
+              class="active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
             >
               Próximo
             </button>
           </div>
-        </main>
+        </form>
       </section>
 
       <section>
@@ -94,7 +95,7 @@
           </span>
           <h2 class="text-lg">Lista de exercícios</h2>
         </button>
-        <main class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
+        <form @submit.prevent="proximoPasso(3)" class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
           <div
             ref="passo2"
             :style="{
@@ -128,7 +129,7 @@
                 >
                   <tr
                     v-for="(exer, exerIndex) in exercicios"
-                    :key="exer"
+                    :key="exer.id"
                     class="transition-all duration-300 ease-in-out border-b-2 border-gray-400"
                   >
                     <td class="py-1 w-full">{{ exer.nome }}</td>
@@ -144,7 +145,8 @@
                       <button
                         @click="editarExercicio(exerIndex)"
                         :disabled="editandoExercicio > -1"
-                        class="text-gray-400 p-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
+                        type="button"
+                        class="active:text-gray-500 hover:text-gray-300 focus:text-gray-300 transition-colors duration-200 ease-in-out text-gray-400 p-0.5 disabled:opacity-40 disabled:cursor-not-allowed"
                         title="Editar"
                       >
                         <span class="material-icons inline align-bottom"> build </span>
@@ -152,7 +154,8 @@
                       <button
                         @click="removerExercicio(exerIndex)"
                         :disabled="editandoExercicio > -1"
-                        class="text-danger-400 p-0.5 ml-1 disabled:opacity-40 disabled:cursor-not-allowed"
+                        type="button"
+                        class="active:text-danger-500 hover:text-danger-300 focus:text-danger-300 transition-colors duration-200 ease-in-out text-danger-400 p-0.5 ml-1 disabled:opacity-40 disabled:cursor-not-allowed"
                         title="Remover"
                       >
                         <span class="material-icons inline align-bottom"> delete </span>
@@ -203,7 +206,8 @@
             <button
               @click="adicionarExercicio()"
               v-if="editandoExercicio === -1"
-              class="w-full block my-3 text-center py-3 px-4 bg-tertiary-400 text-white text-lg rounded-md font-bold"
+              type="button"
+              class="active:bg-tertiary-500 hover:bg-tertiary-300 focus:bg-tertiary-300 transition-colors duration-200 ease-in-out w-full block my-3 text-center py-3 px-4 bg-tertiary-400 text-white text-lg rounded-md font-bold"
             >
               Adicionar exercício
             </button>
@@ -211,13 +215,15 @@
             <div v-if="editandoExercicio > -1" class="grid grid-cols-2 gap-x-3">
               <button
                 @click="salvarEdicao()"
-                class="block my-3 text-center py-3 px-4 bg-tertiary-400 text-white text-lg rounded-md font-bold"
+                type="button"
+                class="active:bg-tertiary-500 hover:bg-tertiary-300 focus:bg-tertiary-300 transition-colors duration-200 ease-in-out block my-3 text-center py-3 px-4 bg-tertiary-400 text-white text-lg rounded-md font-bold"
               >
                 Salvar
               </button>
               <button
                 @click="cancelarEdicao()"
-                class="block my-3 text-center py-3 px-4 bg-danger-400 text-white text-lg rounded-md font-bold"
+                type="button"
+                class="active:bg-danger-500 hover:bg-danger-300 focus:bg-danger-300 transition-colors duration-200 ease-in-out block my-3 text-center py-3 px-4 bg-danger-400 text-white text-lg rounded-md font-bold"
               >
                 Cancelar
               </button>
@@ -226,19 +232,21 @@
             <div>
               <button
                 @click="proximoPasso(1)"
-                class="inline-block py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+                type="button"
+                class="active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out inline-block py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
               >
                 Anterior
               </button>
               <button
                 @click="proximoPasso(3)"
-                class="inline-block ml-2 py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+                type="submit"
+                class="active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out inline-block ml-2 py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
               >
                 Próximo
               </button>
             </div>
           </div>
-        </main>
+        </form>
       </section>
 
       <section>
@@ -251,7 +259,7 @@
           </span>
           <h2 class="text-lg">Confirme seu treino</h2>
         </button>
-        <main class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
+        <form @submit.prevent="upsertTreino()" class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
           <div
             ref="passo3"
             :style="{
@@ -293,7 +301,7 @@
                   </tr>
                 </thead>
                 <tbody class="text-sm whitespace-nowrap">
-                  <tr v-for="exer in exercicios" :key="exer" class="border-b-2 border-gray-400">
+                  <tr v-for="exer in exercicios" :key="exer.id" class="border-b-2 border-gray-400">
                     <td class="w-full py-1">{{ exer.nome }}</td>
                     <td class="p-1">{{ !!exer.peso ? exer.peso + ' kg' : '' }}</td>
                     <td class="py-1">{{ exer.observacoes }}</td>
@@ -304,19 +312,21 @@
             <div>
               <button
                 @click="proximoPasso(2)"
-                class="disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+                type="button"
+                class="active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
               >
                 Anterior
               </button>
 
               <button
-                class="mt-3 mb-1 w-full bg-gradient-to-r to-primary-600 from-secondary-500 text-white block text-center uppercase rounded py-3 text-xl font-bold shadow"
+                type="submit"
+                class="active:to-primary-700 active:from-secondary-600 hover:to-primary-500 hover:from-secondary-400 focus:to-primary-500 focus:from-secondary-400 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 mt-3 mb-1 w-full bg-gradient-to-r to-primary-600 from-secondary-500 text-white block text-center uppercase rounded py-3 text-xl font-bold shadow"
               >
                 Criar treino
               </button>
             </div>
           </div>
-        </main>
+        </form>
       </section>
     </article>
   </main>
@@ -341,6 +351,7 @@ export default {
         nome: '',
         peso: null,
         observacoes: null,
+        id: this.gerarId(),
       },
     };
   },
@@ -385,6 +396,10 @@ export default {
     }, 300);
   },
   methods: {
+    gerarId() {
+      const data = new Date();
+      return data.getTime();
+    },
     proximoPasso(index) {
       if (this.passo === index) return;
 
@@ -437,6 +452,7 @@ export default {
             nome: '',
             peso: null,
             observacoes: null,
+            id: this.gerarId(),
           };
 
           setTimeout(() => {
@@ -482,6 +498,7 @@ export default {
             nome: '',
             peso: null,
             observacoes: null,
+            id: this.gerarId(),
           };
 
           setTimeout(() => {
@@ -500,6 +517,7 @@ export default {
           nome: '',
           peso: null,
           observacoes: null,
+          id: this.gerarId(),
         };
 
         setTimeout(() => {
@@ -511,6 +529,9 @@ export default {
       return this.passo == index && this.$refs['passo' + index]
         ? this.$refs['passo' + index].scrollHeight + 'px'
         : '';
+    },
+    upsertTreino() {
+      console.log(this.treino, this.exercicios);
     },
   },
 };
