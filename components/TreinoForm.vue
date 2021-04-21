@@ -8,7 +8,9 @@
           >
             1
           </span>
-          <h2 class="text-lg">Treino</h2>
+          <h2 class="text-lg">
+            {{ editMode ? 'Edite seu treino' : 'Crie seu treino' }}
+          </h2>
         </button>
         <form @submit.prevent="proximoPasso(2)" class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
           <div
@@ -257,7 +259,9 @@
           >
             3
           </span>
-          <h2 class="text-lg">Confirme seu treino</h2>
+          <h2 class="text-lg">
+            {{ editMode ? 'Confirme suas alterações' : 'Confirme seu treino' }}
+          </h2>
         </button>
         <form @submit.prevent="upsertTreino()" class="border-l-2 ml-2.5 pl-3 py-1 border-gray-400">
           <div
@@ -274,16 +278,16 @@
               <table class="border-collapse w-full mt-2 mb-4">
                 <thead class="text-sm">
                   <tr class="text-center">
-                    <th class="px-1 w-1/3">Repetições</th>
-                    <th class="px-1 w-1/3">Séries</th>
-                    <th class="w-1/3">Intervalo</th>
+                    <th>Repetições</th>
+                    <th class="px-1 w-full">Séries</th>
+                    <th>Intervalo</th>
                   </tr>
                 </thead>
                 <tbody class="text-center text-sm whitespace-nowrap">
                   <tr>
-                    <td class="w-1/3 p-1">{{ treino.repeticoes }}</td>
-                    <td class="w-1/3 p-1">{{ treino.series }}</td>
-                    <td class="w-1/3 py-1">
+                    <td class="py-1">{{ treino.repeticoes }}</td>
+                    <td class="w-full p-1">{{ treino.series }}</td>
+                    <td class="py-1">
                       {{ !!treino.intervalo ? treino.intervalo + '"' : '' }}
                     </td>
                   </tr>
@@ -322,7 +326,7 @@
                 type="submit"
                 class="active:to-primary-700 active:from-secondary-600 hover:to-primary-500 hover:from-secondary-400 focus:to-primary-500 focus:from-secondary-400 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 mt-3 mb-1 w-full bg-gradient-to-r to-primary-600 from-secondary-500 text-white block text-center uppercase rounded py-3 text-xl font-bold shadow"
               >
-                Criar treino
+                {{ editMode ? 'Salvar treino' : 'Criar treino' }}
               </button>
             </div>
           </div>
@@ -336,9 +340,22 @@
 import { required, integer, maxLength, minValue } from 'vuelidate/lib/validators';
 
 export default {
+  props: {
+    editMode: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    treinoId: {
+      type: String,
+      required: false,
+      default: null,
+    },
+  },
   data() {
     return {
       treino: {
+        id: this.gerarId(),
         nome: '',
         series: null,
         repeticoes: null,
@@ -385,7 +402,6 @@ export default {
       },
     },
   },
-  watch: {},
   mounted() {
     setTimeout(() => {
       this.passo = 1;
