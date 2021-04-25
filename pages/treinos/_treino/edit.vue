@@ -9,8 +9,10 @@ export default {
       title: `Editar ${this.$route.params.treino}`,
     };
   },
-  salvouTreino() {
-    this.$router.push('/treinos');
+  methods: {
+    salvouTreino() {
+      this.$router.push('/treinos');
+    },
   },
 };
 </script>

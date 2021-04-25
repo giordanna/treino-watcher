@@ -399,7 +399,7 @@ export default {
     exercicio: {
       nome: {
         required,
-        maxLength: maxLength(12),
+        maxLength: maxLength(15),
       },
       peso: {
         integer,

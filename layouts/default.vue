@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
   mounted() {
@@ -24,7 +24,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
+    ...mapMutations({
       setarTreinos: 'setarTreinos',
     }),
   },

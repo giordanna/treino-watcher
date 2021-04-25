@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto p-3">
+  <main class="container mx-auto p-3 min-h-screen-16 flex justify-between flex-col">
     <header class="mx-auto text-center">
       <h1 class="text-xl my-2">
         Crie seu treino <span class="block text-3xl font-black uppercase">maromba</span> hoje!
@@ -9,7 +9,7 @@
         >stories - br.freepik.com</a
       >
     </header>
-    <div>
+    <footer>
       <NuxtLink
         class="bg-gradient-to-r to-primary-600 from-secondary-500 text-white block text-center uppercase rounded py-3 text-xl font-bold shadow"
         to="/treinos/criar"
@@ -23,7 +23,7 @@
           <span class="ml-1 material-icons inline align-bottom"> expand_more </span>
         </strong>
       </button>
-    </div>
+    </footer>
   </main>
 </template>
 
@@ -36,3 +36,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.min-h-screen-16 {
+  min-height: calc(100vh - theme('spacing.16'));
+}
+</style>

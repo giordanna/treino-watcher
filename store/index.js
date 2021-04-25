@@ -4,7 +4,12 @@ export const state = () => ({
 
 export const getters = {
   treinos(state) {
-    return state.treinos;
+    return state.treinos.map(treino => {
+      return {
+        ...treino,
+        exercicios: [...treino.exercicios],
+      };
+    });
   },
   temTreinos(state) {
     return state.treinos.length > 0;
@@ -21,9 +26,9 @@ export const mutations = {
     window.localStorage.setItem('treinos', JSON.stringify(state.treinos));
   },
   editarTreino(state, treino) {
-    const index = state.treinos.findIndex(treinoState => {
-      treinoState.id === treino.id;
-    });
+    const index = state.treinos.findIndex(
+      treinoState => treinoState.id.toString() === treino.id.toString(),
+    );
 
     if (index > -1) {
       state.treinos[index] = treino;
@@ -33,9 +38,7 @@ export const mutations = {
     }
   },
   removerTreino(state, id) {
-    const index = state.treinos.findIndex(treino => {
-      treino.id === id;
-    });
+    const index = state.treinos.findIndex(treino => treino.id.toString() === id.toString());
 
     if (index > -1) {
       state.treinos[index].splice(index, 1);
@@ -48,27 +51,26 @@ export const mutations = {
 
 export const actions = {
   getTreino({ state }, id) {
-    const index = state.treinos.findIndex(treino => {
-      treino.id === id;
-    });
+    const index = state.treinos.findIndex(treino => treino.id.toString() === id.toString());
 
     if (index > -1) {
       return {
         ...state.treinos[index],
+        exercicios: [...state.treinos[index].exercicios],
       };
     } else {
       throw new Error('Treino não encontrado');
     }
   },
   getExercicio({ state }, { idTreino, idExercicio }) {
-    const indexTreino = state.treinos.findIndex(treino => {
-      treino.id === idTreino;
-    });
+    const indexTreino = state.treinos.findIndex(
+      treino => treino.id.toString() === idTreino.toString(),
+    );
 
     if (indexTreino > -1) {
-      const indexExercicio = state.treinos[indexTreino].exercicios.findIndex(exercicio => {
-        exercicio.id === idExercicio;
-      });
+      const indexExercicio = state.treinos[indexTreino].exercicios.findIndex(
+        exercicio => exercicio.id.toString() === idExercicio.toString(),
+      );
 
       if (indexExercicio > -1) {
         return {
