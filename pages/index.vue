@@ -31,7 +31,7 @@
 export default {
   head() {
     return {
-      title: `Treino Tracker`,
+      title: `Início`,
     };
   },
 };

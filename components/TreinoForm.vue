@@ -107,10 +107,10 @@
           >
             <div>
               <h3 class="text-lg font-bold">Exercícios</h3>
-              <p v-if="exercicios.length === 0">
+              <p v-if="treino.exercicios.length === 0">
                 Preencha o formulário abaixo para criar um exercício.
               </p>
-              <table v-if="exercicios.length > 0" class="border-collapse w-full mt-2 mb-4">
+              <table v-if="treino.exercicios.length > 0" class="border-collapse w-full mt-2 mb-4">
                 <thead class="text-sm">
                   <tr class="text-left border-b-2 border-gray-400">
                     <th class="w-full">Nome</th>
@@ -130,7 +130,7 @@
                   tag="tbody"
                 >
                   <tr
-                    v-for="(exer, exerIndex) in exercicios"
+                    v-for="(exer, exerIndex) in treino.exercicios"
                     :key="exer.id"
                     class="transition-all duration-300 ease-in-out border-b-2 border-gray-400"
                   >
@@ -305,7 +305,11 @@
                   </tr>
                 </thead>
                 <tbody class="text-sm whitespace-nowrap">
-                  <tr v-for="exer in exercicios" :key="exer.id" class="border-b-2 border-gray-400">
+                  <tr
+                    v-for="exer in treino.exercicios"
+                    :key="exer.id"
+                    class="border-b-2 border-gray-400"
+                  >
                     <td class="w-full py-1">{{ exer.nome }}</td>
                     <td class="p-1">{{ !!exer.peso ? exer.peso + ' kg' : '' }}</td>
                     <td class="py-1">{{ exer.observacoes }}</td>
@@ -338,6 +342,7 @@
 
 <script>
 import { required, integer, maxLength, minValue } from 'vuelidate/lib/validators';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   props: {
@@ -360,10 +365,10 @@ export default {
         series: null,
         repeticoes: null,
         intervalo: null,
+        exercicios: [],
       },
       editandoExercicio: -1,
       passo: 0,
-      exercicios: [],
       exercicio: {
         nome: '',
         peso: null,
@@ -402,16 +407,38 @@ export default {
       },
     },
   },
-  mounted() {
-    setTimeout(() => {
-      this.passo = 1;
+  async mounted() {
+    if (this.editMode) {
+      try {
+        this.treino = await this.getTreino(this.treinoId);
+        setTimeout(() => {
+          this.passo = 1;
 
+          setTimeout(() => {
+            this.$refs.treino.focus();
+          }, 300);
+        }, 300);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
       setTimeout(() => {
-        this.$refs.treino.focus();
+        this.passo = 1;
+
+        setTimeout(() => {
+          this.$refs.treino.focus();
+        }, 300);
       }, 300);
-    }, 300);
+    }
   },
   methods: {
+    ...mapActions({
+      getTreino: 'getTreino',
+    }),
+    ...mapMutations({
+      adicionarTreino: 'adicionarTreino',
+      editarTreino: 'editarTreino',
+    }),
     gerarId() {
       const data = new Date();
       return data.getTime();
@@ -445,9 +472,9 @@ export default {
         case 3: {
           this.$v.treino.$touch();
 
-          if (!this.$v.treino.$error && this.exercicios.length > 0) {
+          if (!this.$v.treino.$error && this.treino.exercicios.length > 0) {
             this.passo = index;
-          } else if (this.exercicios.length === 0) {
+          } else if (this.treino.exercicios.length === 0) {
             this.$v.exercicio.$touch();
           }
           break;
@@ -457,7 +484,7 @@ export default {
     adicionarExercicio() {
       this.$v.exercicio.$touch();
       if (!this.$v.exercicio.$error) {
-        this.exercicios.push({
+        this.treino.exercicios.push({
           ...this.exercicio,
         });
 
@@ -478,7 +505,7 @@ export default {
       }
     },
     removerExercicio(index) {
-      this.exercicios.splice(index, 1);
+      this.treino.exercicios.splice(index, 1);
 
       setTimeout(() => {
         this.$refs.exercicio.focus();
@@ -489,7 +516,7 @@ export default {
 
       this.$nextTick(() => {
         this.exercicio = {
-          ...this.exercicios[index],
+          ...this.treino.exercicios[index],
         };
 
         setTimeout(() => {
@@ -501,7 +528,7 @@ export default {
       this.$v.exercicio.$touch();
 
       if (!this.$v.exercicio.$error) {
-        this.exercicios[this.editandoExercicio] = {
+        this.treino.exercicios[this.editandoExercicio] = {
           ...this.exercicio,
         };
 
@@ -547,7 +574,12 @@ export default {
         : '';
     },
     upsertTreino() {
-      console.log(this.treino, this.exercicios);
+      if (!this.editMode) {
+        this.adicionarTreino(this.treino);
+      } else {
+        this.editarTreino(this.treino);
+      }
+      this.$emit('treinoSalvo');
     },
   },
 };

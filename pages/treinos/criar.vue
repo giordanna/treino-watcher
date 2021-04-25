@@ -1,13 +1,18 @@
 <template>
-  <TreinoForm />
+  <TreinoForm @treinoSalvo="salvouTreino()" />
 </template>
 
 <script>
 export default {
   head() {
     return {
-      title: `Criar | Treino Tracker`,
+      title: `Criar`,
     };
+  },
+  methods: {
+    salvouTreino() {
+      this.$router.push('/treinos');
+    },
   },
 };
 </script>
