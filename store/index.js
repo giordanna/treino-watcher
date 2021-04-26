@@ -70,7 +70,13 @@ export const actions = {
     if (index > -1) {
       return {
         ...state.treinos[index],
-        exercicios: [...state.treinos[index].exercicios],
+        exercicios: [
+          ...state.treinos[index].exercicios.map(exercicio => {
+            return {
+              ...exercicio,
+            };
+          }),
+        ],
       };
     } else {
       throw new Error('Treino não encontrado');

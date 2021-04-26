@@ -1,5 +1,8 @@
 <template>
   <div class="p-3 container mx-auto min-h-screen flex justify-between flex-col">
+    <Modal v-show="modalAberto" @fechar="modalAberto = false">
+      <div class="w-52">TODO</div>
+    </Modal>
     <main>
       <header class="mx-auto text-center mb-5">
         <h1 class="text-3xl font-black uppercase my-2">Meus treinos</h1>
@@ -69,6 +72,11 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   middleware: 'tem-treino',
+  data() {
+    return {
+      modalAberto: false,
+    };
+  },
   computed: {
     ...mapGetters({
       treinos: 'treinos',
@@ -85,6 +93,7 @@ export default {
     }),
     removerTreino(treino) {
       console.log(treino);
+      this.modalAberto = true;
     },
     calcularTempo(treino) {
       if (!!treino.intervalo && !!treino.series) {
@@ -115,6 +124,6 @@ export default {
 
 <style scoped>
 .min-h-screen {
-  min-height: calc(100vh - theme('spacing.14'));
+  min-height: calc(100 * var(--vh, 1vh) - theme('spacing.14'));
 }
 </style>

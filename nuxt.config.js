@@ -10,6 +10,7 @@ export default {
     titleTemplate: '%s | Treino Watcher',
     title: 'Início',
     meta: [
+      { name: 'theme-color', content: '#b63d2a' },
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
@@ -48,8 +49,17 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
+    meta: {
+      nativeUI: true,
+    },
     manifest: {
       lang: 'pt-br',
+      name: 'Treino Watcher',
+      author: 'Giordanna',
+      theme_color: '#b63d2a',
+      background_color: '#f2f4dc',
+      short_name: 'Treino Watcher',
+      description: 'Crie seu treino MAROMBA aqui!',
     },
   },
 

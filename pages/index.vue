@@ -52,6 +52,6 @@ export default {
 
 <style scoped>
 .min-h-screen {
-  min-height: calc(100vh - theme('spacing.14'));
+  min-height: calc(100 * var(--vh, 1vh) - theme('spacing.14'));
 }
 </style>
