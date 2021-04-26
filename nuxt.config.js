@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s | Treino Tracker',
+    titleTemplate: '%s | Treino Watcher',
     title: 'Início',
     meta: [
       { charset: 'utf-8' },

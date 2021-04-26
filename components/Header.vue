@@ -9,7 +9,7 @@
       title="Ir para o ínicio"
       class="z-0 font-light text-xl h-full py-3 absolute inset-x-0 mx-auto text-center"
     >
-      Treino <span class="font-bold">Tracker</span>
+      Treino <span class="font-bold">Watcher</span>
       <img src="~static/logo.png" class="ml-2 h-full inline align-middle" alt="Logo" />
     </RouterLink>
 
