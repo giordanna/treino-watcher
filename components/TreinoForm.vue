@@ -407,6 +407,19 @@ export default {
       },
     },
   },
+  created() {
+    this.setarBotaoEsquerdo({
+      url: '/treinos',
+      icone: 'chevron_left',
+      titulo: 'Voltar',
+    });
+
+    this.setarBotaoDireito({
+      funcao: this.upsertTreino,
+      icone: this.editMode ? 'save' : 'add_circle_outline',
+      titulo: this.editMode ? 'Salvar treino' : 'Criar treino',
+    });
+  },
   async mounted() {
     if (this.editMode) {
       try {
@@ -438,6 +451,8 @@ export default {
     ...mapMutations({
       adicionarTreino: 'adicionarTreino',
       editarTreino: 'editarTreino',
+      setarBotaoEsquerdo: 'setarBotaoEsquerdo',
+      setarBotaoDireito: 'setarBotaoDireito',
     }),
     gerarId() {
       const data = new Date();
@@ -574,12 +589,16 @@ export default {
         : '';
     },
     upsertTreino() {
-      if (!this.editMode) {
-        this.adicionarTreino(this.treino);
-      } else {
-        this.editarTreino(this.treino);
+      this.$v.treino.$touch();
+
+      if (!this.$v.treino.$error && this.treino.exercicios.length > 0) {
+        if (!this.editMode) {
+          this.adicionarTreino(this.treino);
+        } else {
+          this.editarTreino(this.treino);
+        }
+        this.$emit('treinoSalvo');
       }
-      this.$emit('treinoSalvo');
     },
   },
 };

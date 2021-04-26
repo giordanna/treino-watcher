@@ -1,5 +1,7 @@
 export const state = () => ({
   treinos: [],
+  botaoEsquerdo: null,
+  botaoDireito: null,
 });
 
 export const getters = {
@@ -14,9 +16,21 @@ export const getters = {
   temTreinos(state) {
     return state.treinos.length > 0;
   },
+  botaoEsquerdo(state) {
+    return state.botaoEsquerdo;
+  },
+  botaoDireito(state) {
+    return state.botaoDireito;
+  },
 };
 
 export const mutations = {
+  setarBotaoEsquerdo(state, botaoEsquerdo) {
+    state.botaoEsquerdo = botaoEsquerdo;
+  },
+  setarBotaoDireito(state, botaoDireito) {
+    state.botaoDireito = botaoDireito;
+  },
   setarTreinos(state, treinos) {
     state.treinos = [...treinos];
     window.localStorage.setItem('treinos', JSON.stringify(state.treinos));

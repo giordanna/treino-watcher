@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 container mx-auto min-h-screen-16 flex justify-between flex-col">
+  <div class="p-3 container mx-auto min-h-screen flex justify-between flex-col">
     <main>
       <header class="mx-auto text-center mb-5">
         <h1 class="text-3xl font-black uppercase my-2">Meus treinos</h1>
@@ -65,15 +65,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
+  middleware: 'tem-treino',
   computed: {
     ...mapGetters({
       treinos: 'treinos',
     }),
   },
+  created() {
+    this.setarBotaoEsquerdo(null);
+    this.setarBotaoDireito(null);
+  },
   methods: {
+    ...mapMutations({
+      setarBotaoEsquerdo: 'setarBotaoEsquerdo',
+      setarBotaoDireito: 'setarBotaoDireito',
+    }),
     removerTreino(treino) {
       console.log(treino);
     },
@@ -105,7 +114,7 @@ export default {
 </script>
 
 <style scoped>
-.min-h-screen-16 {
-  min-height: calc(100vh - theme('spacing.16'));
+.min-h-screen {
+  min-height: calc(100vh - theme('spacing.14'));
 }
 </style>

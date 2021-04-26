@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto p-3 min-h-screen-16 flex justify-between flex-col">
+  <main class="container mx-auto p-3 min-h-screen flex justify-between flex-col">
     <header class="mx-auto text-center">
       <h1 class="text-xl my-2">
         Crie seu treino <span class="block text-3xl font-black uppercase">maromba</span> hoje!
@@ -28,17 +28,30 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   head() {
     return {
       title: `Início`,
     };
   },
+  middleware: 'sem-treino',
+  created() {
+    this.setarBotaoEsquerdo(null);
+    this.setarBotaoDireito(null);
+  },
+  methods: {
+    ...mapMutations({
+      setarBotaoEsquerdo: 'setarBotaoEsquerdo',
+      setarBotaoDireito: 'setarBotaoDireito',
+    }),
+  },
 };
 </script>
 
 <style scoped>
-.min-h-screen-16 {
-  min-height: calc(100vh - theme('spacing.16'));
+.min-h-screen {
+  min-height: calc(100vh - theme('spacing.14'));
 }
 </style>
