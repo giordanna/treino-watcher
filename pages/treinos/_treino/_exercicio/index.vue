@@ -85,21 +85,39 @@
         <p>segundos</p>
       </article>
 
-      <article v-if="finalizado" class="text-center text-4xl font-black my-4">
-        <h4 class="mb-4">FINALIZADO</h4>
+      <article v-if="finalizado" class="uppercase text-center text-4xl font-black my-4">
+        <h4 class="mb-4">Finalizado</h4>
         <h5>💪 🎉</h5>
       </article>
     </div>
     <footer class="mx-auto">
+      <NuxtLink
+        v-if="!!linkAnterior"
+        :to="!!linkAnterior ? linkAnterior : '/treinos/' + $route.params.treino"
+        class="inline-block active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+      >
+        Anterior
+      </NuxtLink>
       <button
-        type="button"
+        v-if="!linkAnterior"
+        disabled
         class="active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
       >
         Anterior
       </button>
+
+      <NuxtLink
+        v-if="!!linkProximo"
+        :to="!!linkProximo ? linkProximo : '/treinos/' + $route.params.treino"
+        class="inline-block ml-2 active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+      >
+        Próximo
+      </NuxtLink>
+
       <button
-        type="button"
-        class="ml-2 active:bg-primary-700 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
+        v-if="!linkProximo"
+        disabled
+        class="active:bg-primary-700 ml-2 hover:bg-primary-500 focus:bg-primary-500 transition-colors duration-200 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed py-3 px-4 bg-primary-600 text-white text-lg rounded-md font-bold"
       >
         Próximo
       </button>
@@ -119,6 +137,8 @@ export default {
       finalizado: false,
       intervalo: null,
       isIntervalo: false,
+      linkAnterior: null,
+      linkProximo: null,
     };
   },
   created() {
@@ -142,6 +162,27 @@ export default {
         if (!!this.exercicio.treino.series) {
           this.serie = this.exercicio.treino.series;
         }
+      }
+
+      const index = this.exercicio.treino.exercicios.findIndex(
+        exercicio => exercicio.id === this.exercicio.id,
+      );
+
+      if (index === 0) {
+        this.linkProximo = `/treinos/${this.$route.params.treino}/${
+          this.exercicio.treino.exercicios[index + 1].id
+        }`;
+      } else if (index === this.exercicio.treino.exercicios.length - 1) {
+        this.linkAnterior = `/treinos/${this.$route.params.treino}/${
+          this.exercicio.treino.exercicios[index - 1].id
+        }`;
+      } else {
+        this.linkAnterior = `/treinos/${this.$route.params.treino}/${
+          this.exercicio.treino.exercicios[index - 1].id
+        }`;
+        this.linkProximo = `/treinos/${this.$route.params.treino}/${
+          this.exercicio.treino.exercicios[index + 1].id
+        }`;
       }
     } catch (error) {
       console.error(error);
