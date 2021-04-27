@@ -31,6 +31,29 @@ export const mutations = {
   setarBotaoDireito(state, botaoDireito) {
     state.botaoDireito = botaoDireito;
   },
+  setarExercicio(state, { idTreino, idExercicio, exercicio }) {
+    const indexTreino = state.treinos.findIndex(
+      treino => treino.id.toString() === idTreino.toString(),
+    );
+
+    if (indexTreino > -1) {
+      const indexExercicio = state.treinos[indexTreino].exercicios.findIndex(
+        exercicio => exercicio.id.toString() === idExercicio.toString(),
+      );
+
+      if (indexExercicio > -1) {
+        state.treinos[indexTreino].exercicios[indexExercicio] = {
+          ...state.treinos[indexTreino].exercicios[indexExercicio],
+          ...exercicio,
+        };
+        window.localStorage.setItem('treinos', JSON.stringify(state.treinos));
+      } else {
+        throw new Error('Exercício não encontrado');
+      }
+    } else {
+      throw new Error('Treino não encontrado');
+    }
+  },
   setarTreinos(state, treinos) {
     state.treinos = [...treinos];
     window.localStorage.setItem('treinos', JSON.stringify(state.treinos));
@@ -94,6 +117,9 @@ export const actions = {
 
       if (indexExercicio > -1) {
         return {
+          treino: {
+            ...state.treinos[indexTreino],
+          },
           ...state.treinos[indexTreino].exercicios[indexExercicio],
         };
       } else {

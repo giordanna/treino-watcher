@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto p-3 pl-1">
+  <main class="max-w-screen-md w-full mx-auto p-3 pl-1">
     <article class="mt-2">
       <section>
         <button @click="proximoPasso(1)" class="focus:outline-none w-full py-2 flex items-center">

@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto p-3 min-h-screen flex justify-between flex-col">
+  <main class="w-full max-w-screen-md mx-auto p-3 min-h-screen flex justify-between flex-col">
     <header class="mx-auto text-center">
       <h1 class="text-xl my-2">
         Crie seu treino <span class="block text-3xl font-black uppercase">maromba</span> hoje!
@@ -49,9 +49,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.min-h-screen {
-  min-height: calc(100 * var(--vh, 1vh) - theme('spacing.14'));
-}
-</style>

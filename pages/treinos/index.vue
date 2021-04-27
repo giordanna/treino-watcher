@@ -1,14 +1,14 @@
 <template>
-  <div class="p-3 container mx-auto min-h-screen flex justify-between flex-col">
+  <div class="p-3 w-full max-w-screen-md mx-auto min-h-screen flex justify-between flex-col">
     <Modal v-show="modalAberto" @fechar="modalAberto = false">
       <div class="w-52">TODO</div>
     </Modal>
     <main>
-      <header class="mx-auto text-center mb-5">
+      <header class="text-center mb-5">
         <h1 class="text-3xl font-black uppercase my-2">Meus treinos</h1>
         <h2>Clique em um dos seus treinos para começar.</h2>
       </header>
-      <table class="border-collapse w-full mt-2 mb-4">
+      <table class="border-collapse mt-2 mb-4">
         <thead class="text-sm">
           <tr class="text-left border-b-2 border-gray-400">
             <th class="w-full">Nome</th>
@@ -121,9 +121,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.min-h-screen {
-  min-height: calc(100 * var(--vh, 1vh) - theme('spacing.14'));
-}
-</style>
