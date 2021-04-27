@@ -55,6 +55,7 @@
               />
               <input
                 type="checkbox"
+                @change="toggleExercicio(exer)"
                 class="cursor-pointer form-checkbox rounded h-5 w-5 text-primary-600"
                 v-model="exer.selecionado"
               />
@@ -124,6 +125,7 @@ export default {
     ...mapMutations({
       setarBotaoEsquerdo: 'setarBotaoEsquerdo',
       setarBotaoDireito: 'setarBotaoDireito',
+      setarExercicio: 'setarExercicio',
     }),
     ...mapActions({
       getTreino: 'getTreino',
@@ -131,6 +133,23 @@ export default {
     resetarExercicios() {
       this.treino.exercicios.map(exercicio => {
         exercicio.selecionado = false;
+
+        this.setarExercicio({
+          idTreino: this.$route.params.treino,
+          idExercicio: exercicio.id,
+          exercicio: {
+            selecionado: false,
+          },
+        });
+      });
+    },
+    toggleExercicio(exer) {
+      this.setarExercicio({
+        idTreino: this.$route.params.treino,
+        idExercicio: exer.id,
+        exercicio: {
+          selecionado: exer.selecionado,
+        },
       });
     },
   },
