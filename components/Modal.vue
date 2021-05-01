@@ -1,7 +1,7 @@
 <template>
   <div class="fixed z-30 w-screen h-screen inset-0 flex items-center justify-between">
     <!-- modal -->
-    <div class="rounded-lg bg-white z-50 mx-auto max-h-full max-w-full shadow">
+    <div class="rounded-lg overflow-hidden bg-white z-50 mx-auto max-h-full max-w-full shadow">
       <slot></slot>
     </div>
 

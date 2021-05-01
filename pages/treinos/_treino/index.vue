@@ -10,17 +10,17 @@
 
         <table v-if="!!treino" class="border-collapse w-full mt-2 mb-4">
           <thead class="text-sm">
-            <tr class="text-center">
-              <th>Repetições</th>
-              <th class="px-1 w-full">Séries</th>
-              <th>Intervalo</th>
+            <tr class="text-center w-full">
+              <th class="w-1/3">Repetições</th>
+              <th class="px-1 w-1/3">Séries</th>
+              <th class="w-1/3">Intervalo</th>
             </tr>
           </thead>
           <tbody class="text-center text-sm whitespace-nowrap">
-            <tr>
-              <td class="py-1">{{ treino.repeticoes }}</td>
-              <td class="w-full p-1">{{ treino.series }}</td>
-              <td class="py-1">
+            <tr class="w-full">
+              <td class="py-1 w-1/3">{{ treino.repeticoes }}</td>
+              <td class="p-1 w-1/3">{{ treino.series }}</td>
+              <td class="py-1 w-1/3">
                 {{ !!treino.intervalo ? treino.intervalo + '"' : '' }}
               </td>
             </tr>
@@ -49,10 +49,6 @@
             class="relative border-b-2 border-gray-400 transition-color duration-300 ease-in-out"
           >
             <td class="p-1">
-              <hr
-                :class="{ 'w-full-12': exer.selecionado }"
-                class="z-10 absolute w-0 border-t-1 border-gray-300 inset-y-0 right-0 my-auto transition-all duration-300 ease-in-out"
-              />
               <input
                 type="checkbox"
                 @change="toggleExercicio(exer)"
@@ -155,9 +151,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.w-full-12 {
-  width: calc(100% - theme('spacing.7'));
-}
-</style>

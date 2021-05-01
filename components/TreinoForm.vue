@@ -1,5 +1,5 @@
 <template>
-  <main class="max-w-screen-md w-full mx-auto p-3 pl-1">
+  <main class="min-h-screen max-w-screen-md w-full mx-auto p-3 pl-1">
     <article class="mt-2">
       <section>
         <button @click="proximoPasso(1)" class="focus:outline-none w-full py-2 flex items-center">
@@ -91,7 +91,7 @@
         <button @click="proximoPasso(2)" class="focus:outline-none w-full py-2 flex items-center">
           <span
             :class="{ 'bg-primary-600': passo > 1 }"
-            class="relative transition-color duration-150 ease-in-out mr-2 rounded-full bg-gray-400 text-white h-6 w-6 text-center inline-block"
+            class="relative transition-color mr-2 rounded-full bg-gray-400 text-white h-6 w-6 text-center inline-block"
           >
             2
           </span>
@@ -255,7 +255,7 @@
         <button @click="proximoPasso(3)" class="focus:outline-none w-full py-2 flex items-center">
           <span
             :class="{ 'bg-primary-600': passo > 2 }"
-            class="transition-color duration-150 ease-in-out mr-2 rounded-full bg-gray-400 text-white h-6 w-6 text-center inline-block"
+            class="transition-color mr-2 rounded-full bg-gray-400 text-white h-6 w-6 text-center inline-block"
           >
             3
           </span>

@@ -26,7 +26,7 @@
         [classAppearance]: true,
       }"
       :disabled="disabled"
-      class="placeholder-transparent disabled:opacity-50 disabled:cursor-not-allowed p-2 w-full text-black font-light ring-gray-400 outline-none transition-opacity duration-200 ease-in-out"
+      class="placeholder-transparent disabled:opacity-50 disabled:cursor-not-allowed p-2 w-full text-black font-light ring-gray-400 outline-none transition-all focus:outline-none border-none"
       :value="value"
       @input="$emit('input', $event.target.value)"
       @focus="focusedInput = true"

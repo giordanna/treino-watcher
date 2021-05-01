@@ -1,8 +1,40 @@
 <template>
   <div class="p-3 w-full max-w-screen-md mx-auto min-h-screen flex justify-between flex-col">
-    <Modal v-show="modalAberto" @fechar="modalAberto = false">
-      <div class="w-52">TODO</div>
-    </Modal>
+    <transition
+      name="fade"
+      enter-active-class="transition-opacity"
+      leave-active-class="transition-opacity"
+      enter-class="opacity-0"
+      leave-to-class="opacity-0"
+    >
+      <Modal v-if="modalAberto && indexDeletar > -1" @fechar="modalAberto = false">
+        <article class="w-72 max-w-full">
+          <header class="m-3">
+            <h1 class="text-lg font-bold my-2">Confirmação</h1>
+            <p>
+              Você tem certeza que deseja apagar o treino
+              <u>{{ treinos[indexDeletar].nome }}</u
+              >?
+            </p>
+          </header>
+
+          <footer class="w-full grid grid-cols-2 border-t">
+            <button
+              @click="confirmarExclusao"
+              class="w-full transition-colors hover:bg-danger-100 p-2 border-r text-danger-500"
+            >
+              Sim
+            </button>
+            <button
+              class="w-full p-2 transition-colors hover:bg-gray-100"
+              @click="modalAberto = false"
+            >
+              Não
+            </button>
+          </footer>
+        </article>
+      </Modal>
+    </transition>
     <main>
       <header class="text-center mb-5">
         <h1 class="text-3xl font-black uppercase my-2">Meus treinos</h1>
@@ -18,7 +50,11 @@
           </tr>
         </thead>
         <tbody class="text-sm whitespace-nowrap">
-          <tr v-for="treino in treinos" :key="treino.id" class="border-b-2 border-gray-400">
+          <tr
+            v-for="(treino, index) in treinos"
+            :key="treino.id"
+            class="border-b-2 border-gray-400"
+          >
             <td class="w-full py-1">
               <NuxtLink class="block" :to="'/treinos/' + treino.id">
                 {{ treino.nome }}
@@ -43,7 +79,7 @@
                 <span class="material-icons inline align-bottom"> build </span>
               </NuxtLink>
               <button
-                @click="removerTreino(treino)"
+                @click="removerTreino(index)"
                 type="button"
                 class="active:text-danger-500 hover:text-danger-300 focus:text-danger-300 transition-colors duration-200 ease-in-out text-danger-400 p-0.5 ml-1 disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Remover"
@@ -75,6 +111,7 @@ export default {
   data() {
     return {
       modalAberto: false,
+      indexDeletar: -1,
     };
   },
   computed: {
@@ -90,10 +127,16 @@ export default {
     ...mapMutations({
       setarBotaoEsquerdo: 'setarBotaoEsquerdo',
       setarBotaoDireito: 'setarBotaoDireito',
+      removerTreino: 'removerTreino',
     }),
-    removerTreino(treino) {
-      console.log(treino);
+    removerTreino(indexTreino) {
+      this.indexDeletar = indexTreino;
       this.modalAberto = true;
+    },
+    confirmarExclusao() {
+      this.removerTreino(this.indexDeletar);
+      this.indexDeletar = -1;
+      this.modalAberto = false;
     },
     calcularTempo(treino) {
       if (!!treino.intervalo && !!treino.series) {
