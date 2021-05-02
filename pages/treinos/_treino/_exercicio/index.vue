@@ -193,6 +193,7 @@ export default {
       setarBotaoEsquerdo: 'setarBotaoEsquerdo',
       setarBotaoDireito: 'setarBotaoDireito',
       setarExercicio: 'setarExercicio',
+      setarSnack: 'setarSnack',
     }),
     ...mapActions({
       getExercicio: 'getExercicio',
@@ -209,14 +210,21 @@ export default {
       clearInterval(this.intervalo);
 
       if (!!this.exercicio.treino.series && this.exercicio.treino.series === this.serie) {
-        this.finalizado = true;
-        this.setarExercicio({
-          idTreino: this.$route.params.treino,
-          idExercicio: this.$route.params.exercicio,
-          exercicio: {
-            selecionado: true,
-          },
-        });
+        try {
+          this.finalizado = true;
+          this.setarExercicio({
+            idTreino: this.$route.params.treino,
+            idExercicio: this.$route.params.exercicio,
+            exercicio: {
+              selecionado: true,
+            },
+          });
+        } catch (error) {
+          this.setarSnack({
+            cor: 'danger',
+            texto: error.message,
+          });
+        }
       } else {
         this.serie++;
       }

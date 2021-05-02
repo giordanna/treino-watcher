@@ -122,31 +122,46 @@ export default {
       setarBotaoEsquerdo: 'setarBotaoEsquerdo',
       setarBotaoDireito: 'setarBotaoDireito',
       setarExercicio: 'setarExercicio',
+      setarSnack: 'setarSnack',
     }),
     ...mapActions({
       getTreino: 'getTreino',
     }),
     resetarExercicios() {
-      this.treino.exercicios.map(exercicio => {
-        exercicio.selecionado = false;
+      try {
+        this.treino.exercicios.map(exercicio => {
+          exercicio.selecionado = false;
 
-        this.setarExercicio({
-          idTreino: this.$route.params.treino,
-          idExercicio: exercicio.id,
-          exercicio: {
-            selecionado: false,
-          },
+          this.setarExercicio({
+            idTreino: this.$route.params.treino,
+            idExercicio: exercicio.id,
+            exercicio: {
+              selecionado: false,
+            },
+          });
         });
-      });
+      } catch (error) {
+        this.setarSnack({
+          cor: 'danger',
+          texto: error.message,
+        });
+      }
     },
     toggleExercicio(exer) {
-      this.setarExercicio({
-        idTreino: this.$route.params.treino,
-        idExercicio: exer.id,
-        exercicio: {
-          selecionado: exer.selecionado,
-        },
-      });
+      try {
+        this.setarExercicio({
+          idTreino: this.$route.params.treino,
+          idExercicio: exer.id,
+          exercicio: {
+            selecionado: exer.selecionado,
+          },
+        });
+      } catch (error) {
+        this.setarSnack({
+          cor: 'danger',
+          texto: error.message,
+        });
+      }
     },
   },
 };

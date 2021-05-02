@@ -1,7 +1,7 @@
 <template>
   <div class="p-3 w-full max-w-screen-md mx-auto min-h-screen flex justify-between flex-col">
     <transition
-      name="fade"
+      name="modal"
       enter-active-class="transition-opacity"
       leave-active-class="transition-opacity"
       enter-class="opacity-0"
@@ -79,7 +79,10 @@
                 <span class="material-icons inline align-bottom"> build </span>
               </NuxtLink>
               <button
-                @click="removerTreino(index)"
+                @click="
+                  indexDeletar = index;
+                  modalAberto = true;
+                "
                 type="button"
                 class="active:text-danger-500 hover:text-danger-300 focus:text-danger-300 transition-colors duration-200 ease-in-out text-danger-400 p-0.5 ml-1 disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Remover"
@@ -128,15 +131,25 @@ export default {
       setarBotaoEsquerdo: 'setarBotaoEsquerdo',
       setarBotaoDireito: 'setarBotaoDireito',
       removerTreino: 'removerTreino',
+      setarSnack: 'setarSnack',
     }),
-    removerTreino(indexTreino) {
-      this.indexDeletar = indexTreino;
-      this.modalAberto = true;
-    },
     confirmarExclusao() {
-      this.removerTreino(this.indexDeletar);
-      this.indexDeletar = -1;
-      this.modalAberto = false;
+      try {
+        const nome = this.treinos[this.indexDeletar].nome;
+
+        this.removerTreino(this.treinos[this.indexDeletar].id);
+        this.indexDeletar = -1;
+        this.modalAberto = false;
+        this.setarSnack({
+          cor: 'success',
+          texto: `O treino "${nome}" foi removido com sucesso!`,
+        });
+      } catch (error) {
+        this.setarSnack({
+          cor: 'danger',
+          texto: error.message,
+        });
+      }
     },
     calcularTempo(treino) {
       if (!!treino.intervalo && !!treino.series) {

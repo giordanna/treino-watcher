@@ -2,6 +2,12 @@ export const state = () => ({
   treinos: [],
   botaoEsquerdo: null,
   botaoDireito: null,
+  snack: {
+    mostrar: false,
+    texto: '',
+    cor: '',
+    duracao: 5000,
+  },
 });
 
 export const getters = {
@@ -22,9 +28,21 @@ export const getters = {
   botaoDireito(state) {
     return state.botaoDireito;
   },
+  snack(state) {
+    return state.snack;
+  },
 };
 
 export const mutations = {
+  setarSnack(state, snack) {
+    state.snack = {
+      mostrar: true,
+      texto: '',
+      cor: '',
+      duracao: 3000,
+      ...snack,
+    };
+  },
   setarBotaoEsquerdo(state, botaoEsquerdo) {
     state.botaoEsquerdo = botaoEsquerdo;
   },
@@ -78,7 +96,7 @@ export const mutations = {
     const index = state.treinos.findIndex(treino => treino.id.toString() === id.toString());
 
     if (index > -1) {
-      state.treinos[index].splice(index, 1);
+      state.treinos.splice(index, 1);
       window.localStorage.setItem('treinos', JSON.stringify(state.treinos));
     } else {
       throw new Error('Treino não encontrado');

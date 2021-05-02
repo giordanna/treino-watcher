@@ -2,6 +2,18 @@
   <div class="box-border min-h-screen bg-background-200 relative">
     <Header class="sticky top-0 z-10" />
 
+    <transition
+      name="snack"
+      enter-active-class="transition duration-300"
+      leave-active-class="transition duration-300"
+      enter-class="opacity-0 transform translate-y-full"
+      leave-to-class="opacity-0 transform translate-y-full"
+    >
+      <Snackbar v-if="!!snack && snack.mostrar" :cor="snack.cor">
+        {{ snack.texto }}
+      </Snackbar>
+    </transition>
+
     <main>
       <Nuxt />
     </main>
@@ -9,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   middleware: 'get-treinos',
   destroyed() {
@@ -17,6 +31,11 @@ export default {
   mounted() {
     this.setVh();
     window.addEventListener('resize', this.setVh);
+  },
+  computed: {
+    ...mapGetters({
+      snack: 'snack',
+    }),
   },
   methods: {
     setVh() {

@@ -453,6 +453,7 @@ export default {
       editarTreino: 'editarTreino',
       setarBotaoEsquerdo: 'setarBotaoEsquerdo',
       setarBotaoDireito: 'setarBotaoDireito',
+      setarSnack: 'setarSnack',
     }),
     gerarId() {
       const data = new Date();
@@ -592,12 +593,23 @@ export default {
       this.$v.treino.$touch();
 
       if (!this.$v.treino.$error && this.treino.exercicios.length > 0) {
-        if (!this.editMode) {
-          this.adicionarTreino(this.treino);
-        } else {
-          this.editarTreino(this.treino);
+        try {
+          if (!this.editMode) {
+            this.adicionarTreino(this.treino);
+          } else {
+            this.editarTreino(this.treino);
+          }
+          this.$emit('treinoSalvo');
+          this.setarSnack({
+            cor: 'success',
+            texto: `Treino "${this.treino.nome}" salvo com sucesso!`,
+          });
+        } catch (error) {
+          this.setarSnack({
+            cor: 'danger',
+            texto: error.message,
+          });
         }
-        this.$emit('treinoSalvo');
       }
     },
   },
