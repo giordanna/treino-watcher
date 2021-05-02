@@ -134,7 +134,7 @@
                     :key="exer.id"
                     class="transition-all duration-300 ease-in-out border-b-2 border-gray-400"
                   >
-                    <td class="py-1 w-full">{{ exer.nome }}</td>
+                    <td class="py-1 w-full max-w-0 truncate">{{ exer.nome }}</td>
                     <td class="p-1">{{ !!exer.peso ? exer.peso + ' kg' : '' }}</td>
                     <td class="p-1">{{ exer.observacoes }}</td>
                     <td
@@ -182,9 +182,6 @@
               >
                 <template v-slot:error>
                   <div v-if="!$v.exercicio.nome.required">* Obrigatório</div>
-                  <div v-else-if="!$v.exercicio.nome.maxLength">
-                    * Máximo {{ $v.exercicio.nome.$params.maxLength.max }} caracteres
-                  </div>
                 </template>
               </Input>
 
@@ -310,7 +307,7 @@
                     :key="exer.id"
                     class="border-b-2 border-gray-400"
                   >
-                    <td class="w-full py-1">{{ exer.nome }}</td>
+                    <td class="w-full max-w-0 truncate py-1">{{ exer.nome }}</td>
                     <td class="p-1">{{ !!exer.peso ? exer.peso + ' kg' : '' }}</td>
                     <td class="py-1">{{ exer.observacoes }}</td>
                   </tr>
@@ -399,7 +396,6 @@ export default {
     exercicio: {
       nome: {
         required,
-        maxLength: maxLength(15),
       },
       peso: {
         integer,

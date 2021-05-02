@@ -18,10 +18,10 @@
           </thead>
           <tbody class="text-center text-sm whitespace-nowrap">
             <tr class="w-full">
-              <td class="py-1 w-1/3">{{ treino.repeticoes }}</td>
-              <td class="p-1 w-1/3">{{ treino.series }}</td>
+              <td class="py-1 w-1/3">{{ !!treino.repeticoes ? treino.repeticoes : '--' }}</td>
+              <td class="p-1 w-1/3">{{ !!treino.series ? treino.series : '--' }}</td>
               <td class="py-1 w-1/3">
-                {{ !!treino.intervalo ? treino.intervalo + '"' : '' }}
+                {{ !!treino.intervalo ? treino.intervalo + '"' : '--' }}
               </td>
             </tr>
           </tbody>
@@ -32,7 +32,7 @@
           feito.
         </p>
       </header>
-      <table class="border-collapse mt-2 mb-4" v-if="!!treino">
+      <table class="w-full border-collapse mt-2 mb-4" v-if="!!treino">
         <thead class="text-sm">
           <tr class="text-left border-b-2 border-gray-400">
             <th></th>
@@ -56,8 +56,8 @@
                 v-model="exer.selecionado"
               />
             </td>
-            <td class="w-full py-1">
-              <RouterLink class="block" :to="'/treinos/' + treino.id + '/' + exer.id">
+            <td class="w-full max-w-0 py-1">
+              <RouterLink class="block truncate" :to="'/treinos/' + treino.id + '/' + exer.id">
                 {{ exer.nome }}
               </RouterLink>
             </td>

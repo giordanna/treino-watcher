@@ -55,8 +55,8 @@
             :key="treino.id"
             class="border-b-2 border-gray-400"
           >
-            <td class="w-full py-1">
-              <NuxtLink class="block" :to="'/treinos/' + treino.id">
+            <td class="w-full max-w-0 py-1">
+              <NuxtLink class="block truncate" :to="'/treinos/' + treino.id">
                 {{ treino.nome }}
               </NuxtLink>
             </td>
