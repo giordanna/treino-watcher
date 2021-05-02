@@ -14,9 +14,7 @@
       </Snackbar>
     </transition>
 
-    <main>
-      <Nuxt />
-    </main>
+    <Nuxt />
   </div>
 </template>
 

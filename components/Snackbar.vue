@@ -5,7 +5,7 @@
       'bg-success-400 text-white': cor === 'success',
       'bg-warning-300 text-white': cor === 'warning',
     }"
-    class="flex justify-between items-center bg-white fixed bottom-20 w-11/12 sm:w-96 rounded-lg shadow p-3 mx-auto inset-x-0"
+    class="z-50 flex justify-between items-center bg-white fixed bottom-20 w-11/12 sm:w-96 rounded-lg shadow p-3 mx-auto inset-x-0"
   >
     <p class="flex-auto">
       <slot></slot>

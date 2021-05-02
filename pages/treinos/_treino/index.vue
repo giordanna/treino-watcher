@@ -4,7 +4,7 @@
   >
     <div>
       <header class="mb-5">
-        <h1 v-if="!!treino" class="text-center text-3xl font-black uppercase my-2">
+        <h1 v-if="!!treino" class="text-center text-3xl font-black uppercase my-2 truncate">
           {{ treino.nome }}
         </h1>
 

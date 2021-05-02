@@ -4,7 +4,7 @@
   >
     <div class="w-full" v-if="!!exercicio">
       <header class="text-center">
-        <h1 class="text-3xl font-bold my-3">
+        <h1 class="text-3xl font-bold my-3 truncate">
           {{ exercicio.nome }}
         </h1>
         <hr class="border-t-2 border-gray-400 w-3/4 mx-auto" />
@@ -46,6 +46,15 @@
             {{ !!exercicio.peso ? exercicio.peso + ' kg' : '--' }}
           </h3>
         </section>
+      </article>
+
+      <article class="text-3xl mb-3 text-center" v-if="!!exercicio.observacoes">
+        <hr class="border-t-2 border-gray-400 w-3/4 mx-auto" />
+        <h1 class="mt-2">Obs.</h1>
+        <h1 class="mb-2 font-bold truncate">
+          {{ exercicio.observacoes }}
+        </h1>
+        <hr class="border-t-2 border-gray-400 w-3/4 mx-auto" />
       </article>
 
       <button
