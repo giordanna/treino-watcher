@@ -144,6 +144,12 @@ export default {
           cor: 'success',
           texto: `O treino "${nome}" foi removido com sucesso!`,
         });
+
+        this.$nextTick(() => {
+          if (this.treinos.length === 0) {
+            this.$router.push('/');
+          }
+        });
       } catch (error) {
         this.setarSnack({
           cor: 'danger',

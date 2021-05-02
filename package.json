@@ -6,7 +6,8 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "deploy": "npm run build && npm run generate && firebase deploy"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^3.3.5",
